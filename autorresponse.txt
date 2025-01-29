@@ -1,0 +1,88 @@
+Documentación del Código de Respuesta Automática de Correos
+
+Descripción General
+
+Este script automatiza la respuesta a correos electrónicos no contestados en un plazo de 48 horas. Utiliza los protocolos IMAP y SMTP para acceder al buzón de entrada y enviar respuestas automáticas.
+
+Dependencias
+
+El script requiere los siguientes módulos de Python:
+
+imaplib: Para conectarse al servidor de correo entrante (IMAP).
+
+smtplib: Para enviar correos a través del servidor SMTP.
+
+email: Para procesar los correos y construir respuestas.
+
+datetime: Para manejar las fechas y calcular los 48 horas de plazo.
+
+Configuración
+
+El usuario debe proporcionar las credenciales y servidores de correo en las siguientes variables:
+
+IMAP_SERVER: Servidor IMAP del correo.
+
+IMAP_USER: Correo electrónico del usuario.
+
+IMAP_PASSWORD: Contraseña del correo electrónico.
+
+SMTP_SERVER: Servidor SMTP.
+
+SMTP_PORT: Puerto del servidor SMTP (587 para TLS, 465 para SSL).
+
+SMTP_USER: Correo electrónico del usuario.
+
+SMTP_PASSWORD: Contraseña del correo electrónico.
+
+Lógica del Script
+
+Conexión al Servidor IMAP:
+
+Se establece una conexión segura con el servidor IMAP.
+
+Se selecciona la bandeja de entrada (inbox).
+
+Búsqueda de Correos No Respondidos:
+
+Se obtiene la fecha de hace 48 horas.
+
+Se buscan los correos recibidos desde esa fecha con el comando IMAP SINCE {date}.
+
+Filtrado de Correos y Respuesta:
+
+Se extrae la dirección del remitente.
+
+Se verifica que el correo no haya sido respondido en las últimas 48 horas.
+
+Se genera una respuesta con un mensaje predeterminado y se configura como una respuesta al correo original (con In-Reply-To y References).
+
+Envío de Respuesta Automática:
+
+Se conecta al servidor SMTP y se envía la respuesta.
+
+Se registra el correo en un archivo de reporte (reporte_respuestas.txt).
+
+Cierre de Conexión:
+
+Se cierra la sesión IMAP de manera segura.
+
+Archivos Generados
+
+reporte_respuestas.txt: Contiene la lista de direcciones de correo a las que se envió respuesta.
+
+Seguridad
+
+Se recomienda no almacenar las credenciales en texto plano, sino usar variables de entorno o un gestor seguro.
+
+Se implementa starttls() para cifrar la conexión SMTP y mejorar la seguridad del envío de correos.
+
+Posibles Mejoras
+
+Manejo de errores más robusto.
+
+Inclusión de logs para depuración.
+
+Configuración mediante un archivo externo en lugar de variables dentro del script.
+
+Fin de la Documentación
+
